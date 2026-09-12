@@ -18,7 +18,7 @@ CHALLENGES = [
         "difficulty": "Easy",
         "connection_info": "http://localhost:8101",
         "flag": "UNKNOWN{view_source_is_a_superpower}",
-        "description": "우리 동아리 홈페이지를 만들었다! 아직 개발 중이라 조금 허술하지만... 설마 이상한 건 없겠지?\n\n**접속:** http://localhost:8101",
+        "description": "우리 동아리 홈페이지를 만들었다! 아직 개발 중이라 조금 허술하지만... 설마 이상한 건 없겠지?",
         "hints": ["화면에 보이는 내용이 전부는 아닐 수 있습니다.", "브라우저의 페이지 소스 보기나 DevTools에서 HTML 주석을 확인해보세요."],
     },
     {
@@ -29,7 +29,7 @@ CHALLENGES = [
         "difficulty": "Easy",
         "connection_info": "http://localhost:8102",
         "flag": "UNKNOWN{cookies_are_client_side}",
-        "description": "관리자 페이지까지 완성했다. 일반 회원은 절대로 못 들어온다. 분명히...?\n\n**접속:** http://localhost:8102",
+        "description": "관리자 페이지까지 완성했다. 일반 회원은 절대로 못 들어온다. 분명히...?",
         "hints": ["사이트가 브라우저에 저장한 값을 확인해보세요.", "role 쿠키 값을 admin으로 바꿔보세요."],
     },
     {
@@ -40,7 +40,7 @@ CHALLENGES = [
         "difficulty": "Easy+",
         "connection_info": "http://localhost:8103",
         "flag": "UNKNOWN{baby_sqli_login_bypass}",
-        "description": "선배가 로그인 기능을 만들어줬다. 보안도 완벽하다는데 비밀번호를 까먹었다...\n\n**접속:** http://localhost:8103",
+        "description": "선배가 로그인 기능을 만들어줬다. 보안도 완벽하다는데 비밀번호를 까먹었다...",
         "hints": ["입력한 값이 SQL 조건문에 직접 들어가는지 생각해보세요.", "WHERE 조건이 항상 참이 되도록 기본 SQL Injection payload를 넣어보세요."],
     },
     {
@@ -51,7 +51,7 @@ CHALLENGES = [
         "difficulty": "Easy",
         "connection_info": "nc localhost 8201",
         "flag": "UNKNOWN{strings_find_plaintext}",
-        "description": "중요한 프로그램에 비밀번호를 걸어놨는데 내가 비밀번호를 까먹었다. 프로그램 안에 흔적이 남아있을지도?\n\n**접속:** `nc localhost 8201`",
+        "description": "중요한 프로그램에 비밀번호를 걸어놨는데 내가 비밀번호를 까먹었다. 프로그램 안에 흔적이 남아있을지도?",
         "hints": ["프로그램 안에 사람이 읽을 수 있는 문자열이 남아 있을 수 있습니다.", "strings 명령으로 바이너리의 printable string을 확인해보세요."],
     },
     {
@@ -62,7 +62,7 @@ CHALLENGES = [
         "difficulty": "Easy",
         "connection_info": "nc localhost 8202",
         "flag": "UNKNOWN{overflow_changes_control_data}",
-        "description": "입력칸을 넉넉하게 만들 필요가 있나? 이름 몇 글자 받는 건데 16글자면 충분하지!\n\n**접속:** `nc localhost 8202`",
+        "description": "입력칸을 넉넉하게 만들 필요가 있나? 이름 몇 글자 받는 건데 16글자면 충분하지!",
         "hints": ["입력 길이가 버퍼 크기보다 길 때 옆 값이 바뀔 수 있습니다.", "32바이트 뒤에 little-endian `0x41424344`를 넣어보세요."],
     },
     {
@@ -73,7 +73,7 @@ CHALLENGES = [
         "difficulty": "Easy+",
         "connection_info": "nc localhost 8203",
         "flag": "UNKNOWN{return_address_goes_to_win}",
-        "description": "이 함수는 아무 데서도 호출하지 않으니까 삭제 안 해도 되겠지? 어차피 실행할 방법도 없잖아.\n\n**접속:** `nc localhost 8203`",
+        "description": "이 함수는 아무 데서도 호출하지 않으니까 삭제 안 해도 되겠지? 어차피 실행할 방법도 없잖아.",
         "hints": ["정상 흐름에서는 호출되지 않는 함수가 바이너리에 남아 있습니다.", "nm/objdump로 win 함수를 찾고 저장된 return address를 덮어보세요."],
     },
     {
