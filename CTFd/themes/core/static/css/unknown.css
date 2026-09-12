@@ -56,6 +56,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 /* Site-wide backdrop. Matches the Challenges/Scoreboard page shell
@@ -63,6 +64,9 @@ html {
    mood: a flat dark ground, soft purple/blue corner glows, and a fine dot
    grid. Card/panel/button colors elsewhere in this file are unchanged. */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background:
     radial-gradient(circle at 20% 10%, rgba(192, 132, 252, 0.10), transparent 19rem),
     radial-gradient(circle at 80% 0%, rgba(88, 166, 255, 0.08), transparent 20rem),
@@ -71,7 +75,6 @@ body {
   color: var(--unknown-text);
   font-family: var(--unknown-sans);
   letter-spacing: 0;
-  min-height: 100vh;
 }
 
 body::before {
@@ -106,7 +109,10 @@ table,
 }
 
 main {
-  min-height: calc(100vh - 72px);
+  /* Overrides the stock _sticky-footer.scss `margin-bottom: 100px`, which
+     otherwise leaves a blank gap between content and the footer below. */
+  margin-bottom: 0;
+  flex: 1 0 auto;
   padding-top: 72px;
 }
 
@@ -2802,95 +2808,40 @@ a.unknown-chip:hover {
   border-bottom-color: rgba(99, 229, 255, 0.24);
 }
 
-/* --- footer --- */
+/* --- footer ---
+   Sticky footer: `body` is a column flex container (min-height: 100vh) and
+   `main` is `flex: 1 0 auto`, so the footer is pushed to the true bottom of
+   the viewport on short pages and simply flows after long content -- no
+   fixed positioning, no magic-number height math against the navbar.
+   Background stays transparent (inherits the page backdrop) so it reads as
+   part of the page rather than a distinct dark band; only a hairline top
+   border marks the boundary. */
 .unknown-footer {
-  border-top: 1px solid var(--unknown-line-soft);
-  background: rgba(2, 6, 15, 0.85);
-  padding-top: clamp(2rem, 5vw, 2.8rem);
-}
-
-.unknown-footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.4rem;
-  padding-bottom: 1.6rem;
-}
-
-.unknown-footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.unknown-footer-brand img {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  border-radius: 6px;
-}
-
-.unknown-footer-brand strong {
-  display: block;
-  color: var(--unknown-text);
-  font-family: var(--unknown-mono);
-  font-size: 0.84rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.unknown-footer-brand p {
-  margin: 0.2rem 0 0;
-  color: var(--unknown-muted);
-  font-size: 0.78rem;
-}
-
-.unknown-footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.3rem;
-}
-
-.unknown-footer-links a {
-  color: var(--unknown-muted);
-  font-family: var(--unknown-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-}
-
-.unknown-footer-links a:hover {
-  color: var(--unknown-cyan);
+  /* Overrides stock _sticky-footer.scss `.footer` (position: absolute;
+     bottom: 1px; height: 60px; line-height: 60px; z-index: -20;), which
+     took the footer out of flow and rendered it behind the page background
+     -- exactly the "floating black band" this theme replaces with a real
+     flex-based sticky footer (see body/main above). */
+  position: static;
+  height: auto;
+  line-height: normal;
+  z-index: auto;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: transparent;
 }
 
 .unknown-footer-base {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 1rem 0;
-  border-top: 1px solid var(--unknown-line-soft);
+  justify-content: center;
+  padding: 1.2rem 0;
   color: var(--unknown-muted);
   font-family: var(--unknown-mono);
   font-size: 0.7rem;
   letter-spacing: 0.04em;
 }
 
-.unknown-footer-base a {
-  text-decoration: none;
-}
-
-@media (max-width: 575.98px) {
-  .unknown-footer-inner,
-  .unknown-footer-base {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
-}
 
 /* --- error pages (401/403/404/429/500/502) --- */
 .unknown-error-page {
