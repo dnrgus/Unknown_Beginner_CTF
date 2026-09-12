@@ -178,6 +178,7 @@ body {
   width: 280px;
   height: 140px;
   box-sizing: border-box;
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 0.8rem 0.82rem 0.72rem;
@@ -200,8 +201,12 @@ body {
 }
 
 .unknown-cb-card h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   min-height: 34px;
   margin: 0 0 0.58rem;
+  overflow: hidden;
   color: #ededf2;
   font-size: clamp(0.95rem, 1vw, 1.08rem);
   font-weight: 900;
