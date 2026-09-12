@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="unknown-hero">
+    {% set unknown_logo = url_for('views.themes_beta', theme='core', path='img/unknown/unknown-hero-logo.png') %}
+    <div class="unknown-stars" aria-hidden="true"></div>
+    <div class="container unknown-hero-grid">
+      <div class="unknown-logo-stage">
+        <div class="unknown-logo-aura" aria-hidden="true"></div>
+        <img class="unknown-hero-logo" src="{{ unknown_logo }}?v=unknown-hero-logo-2" alt="UNKNOWN official logo">
+      </div>
+
+      <div class="unknown-hero-copy">
+        <h1>
+          <span>Think.</span>
+          <span>Analyze.</span>
+          <span class="unknown-blue">
+            <span>Capture the</span>
+            <span>Flag.</span>
+          </span>
+        </h1>
+        <div class="unknown-cta-row">
+          <a class="btn unknown-btn unknown-btn-primary" href="{{ url_for('challenges.listing') }}">START CHALLENGES</a>
+          <a class="btn unknown-btn unknown-btn-secondary" href="{{ url_for('views.static_html', route='guide') }}">BEGINNER GUIDE</a>
+        </div>
+      </div>
+    </div>
+    <a class="unknown-scroll" href="#beginner-path" aria-label="Scroll to beginner guide teaser">
+      <span>SCROLL</span>
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <section id="beginner-path" class="unknown-teaser unknown-reveal">
+    <div class="container">
+      <div class="unknown-section-heading">
+        <p>BEGINNER PATH</p>
+        <h2>처음이라면 이 순서대로 시작하세요.</h2>
+      </div>
+      <div class="unknown-teaser-grid">
+        <a class="unknown-teaser-item" href="{{ url_for('views.static_html', route='guide') }}">
+          <span>01</span>
+          <strong>Guide 확인</strong>
+          <p>flag, hint, category, scoreboard의 기본 흐름을 먼저 가볍게 익힙니다.</p>
+        </a>
+        <a class="unknown-teaser-item" href="{{ url_for('challenges.listing') }}">
+          <span>02</span>
+          <strong>Challenges 입장</strong>
+          <p>낮은 점수 문제부터 설명과 파일을 읽고 하나씩 검증합니다.</p>
+        </a>
+        <a class="unknown-teaser-item" href="{{ url_for('scoreboard.listing') }}">
+          <span>03</span>
+          <strong>Flag 제출</strong>
+          <p><code>UNKNOWN{...}</code> 형식으로 제출하고 점수 변화를 확인합니다.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    (function () {
+      var hero = document.querySelector(".unknown-hero");
+      if (!hero) return;
+
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var coarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      if (reduce || coarsePointer) return;
+
+      var ticking = false;
+      var pending = null;
+
+      function apply() {
+        ticking = false;
+        if (!pending) return;
+        hero.style.setProperty("--unknown-hero-mx", pending.x + "%");
+        hero.style.setProperty("--unknown-hero-my", pending.y + "%");
+      }
+
+      hero.addEventListener("mousemove", function (e) {
+        var rect = hero.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        pending = {
+          x: (42 + (px - 0.5) * 6).toFixed(1),
+          y: (48 + (py - 0.5) * 6).toFixed(1),
+        };
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(apply);
+        }
+      });
+    })();
+  </script>
+{% endblock %}

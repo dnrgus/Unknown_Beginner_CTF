@@ -1,0 +1,463 @@
+/* ============================================================
+   UNKNOWN ADMIN THEME  — operational, dense, dark
+   Loaded after CTFd's own admin stylesheets (see admin/base.html), so this
+   only re-skins existing Bootstrap 4 classes. No admin markup/behavior is
+   introduced or removed by this file.
+   ============================================================ */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/themes/core/static/webfonts/unknown/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --unknown-admin-bg: #05070a;
+  --unknown-admin-surface: #0b0f14;
+  --unknown-admin-surface-2: #10151c;
+  --unknown-admin-line: rgba(99, 229, 255, 0.16);
+  --unknown-admin-line-soft: rgba(99, 229, 255, 0.09);
+  --unknown-admin-blue: #159cff;
+  --unknown-admin-cyan: #63e5ff;
+  --unknown-admin-text: #f5f7fa;
+  --unknown-admin-muted: #93a1ae;
+  --unknown-admin-success: #2ecc71;
+  --unknown-admin-warning: #f5a524;
+  --unknown-admin-danger: #ff5c6c;
+  --unknown-admin-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+body {
+  background: var(--unknown-admin-bg) !important;
+  color: var(--unknown-admin-text);
+}
+
+a {
+  color: var(--unknown-admin-cyan);
+}
+
+a:hover {
+  color: #bff7ff;
+}
+
+/* --- navbar --- */
+.navbar.bg-dark {
+  background: rgba(3, 8, 18, 0.96) !important;
+  border-bottom: 1px solid var(--unknown-admin-line);
+}
+
+.navbar .navbar-brand {
+  font-family: var(--unknown-admin-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--unknown-admin-text) !important;
+}
+
+.navbar .navbar-brand::after {
+  content: " · UNKNOWN";
+  color: var(--unknown-admin-cyan);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(245, 247, 250, 0.72) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: var(--unknown-admin-text) !important;
+}
+
+.navbar .dropdown-menu {
+  background: var(--unknown-admin-surface-2);
+  border: 1px solid var(--unknown-admin-line);
+}
+
+.navbar .dropdown-item {
+  color: var(--unknown-admin-text);
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background: rgba(21, 156, 255, 0.16);
+  color: var(--unknown-admin-text);
+}
+
+/* --- page chrome --- */
+.jumbotron {
+  background: linear-gradient(180deg, rgba(11, 20, 38, 0.92), rgba(5, 9, 16, 0.92)) !important;
+  border-bottom: 1px solid var(--unknown-admin-line);
+  color: var(--unknown-admin-text);
+}
+
+.jumbotron h1 {
+  font-weight: 700;
+}
+
+.footer {
+  border-top: 1px solid var(--unknown-admin-line-soft);
+  background: var(--unknown-admin-bg);
+}
+
+.text-muted {
+  color: var(--unknown-admin-muted) !important;
+}
+
+hr {
+  border-color: var(--unknown-admin-line-soft);
+}
+
+/* --- tables (Challenges / Users / Submissions listings) --- */
+.table {
+  color: var(--unknown-admin-text);
+  border-color: var(--unknown-admin-line-soft);
+}
+
+.table.border {
+  border: 1px solid var(--unknown-admin-line) !important;
+}
+
+.table thead th {
+  border-color: var(--unknown-admin-line);
+  color: var(--unknown-admin-cyan);
+  font-family: var(--unknown-admin-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(11, 20, 38, 0.6);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+.table-hover tbody tr:hover,
+.table tbody tr[data-href]:hover {
+  background-color: rgba(21, 156, 255, 0.1);
+  cursor: pointer;
+}
+
+.table td,
+.table th {
+  border-color: var(--unknown-admin-line-soft);
+}
+
+.border-right {
+  border-right: 1px solid var(--unknown-admin-line-soft) !important;
+}
+
+.unknown-admin-mono {
+  font-family: var(--unknown-admin-mono);
+  font-weight: 700;
+}
+
+.unknown-admin-setup .badge {
+  margin: 0 0.15rem;
+}
+
+/* --- badges --- */
+.badge {
+  font-family: var(--unknown-admin-mono);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.badge-success {
+  background-color: rgba(46, 204, 113, 0.18);
+  color: #7bf5ab;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.badge-danger {
+  background-color: rgba(255, 92, 108, 0.18);
+  color: #ff9aa4;
+  border: 1px solid rgba(255, 92, 108, 0.4);
+}
+
+.badge-warning {
+  background-color: rgba(245, 165, 36, 0.18);
+  color: #ffd9a0;
+  border: 1px solid rgba(245, 165, 36, 0.4);
+}
+
+.badge-info {
+  background-color: rgba(99, 229, 255, 0.16);
+  color: var(--unknown-admin-cyan);
+  border: 1px solid rgba(99, 229, 255, 0.4);
+}
+
+.badge-primary {
+  background-color: rgba(21, 156, 255, 0.2);
+  color: #bfe4ff;
+  border: 1px solid rgba(21, 156, 255, 0.45);
+}
+
+.badge-secondary {
+  background-color: rgba(147, 161, 174, 0.16);
+  color: var(--unknown-admin-muted);
+  border: 1px solid rgba(147, 161, 174, 0.35);
+}
+
+/* result column on the submissions list (see submissions.html) */
+.unknown-admin-result {
+  font-family: var(--unknown-admin-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.unknown-admin-result.is-correct {
+  color: #7bf5ab;
+}
+
+.unknown-admin-result.is-incorrect {
+  color: #d98e94;
+}
+
+/* --- buttons --- */
+.btn {
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #147dff, #20d8ff);
+  border-color: #17a6ff;
+  color: #00111f;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.08);
+  border-color: #17a6ff;
+  color: #00111f;
+}
+
+.btn-outline-primary {
+  color: var(--unknown-admin-cyan);
+  border-color: rgba(99, 229, 255, 0.5);
+}
+
+.btn-outline-primary:hover {
+  background: rgba(21, 156, 255, 0.16);
+  color: var(--unknown-admin-text);
+  border-color: var(--unknown-admin-cyan);
+}
+
+.btn-outline-secondary {
+  color: var(--unknown-admin-text);
+  border-color: rgba(245, 247, 250, 0.28);
+}
+
+.btn-outline-secondary:hover {
+  background: rgba(245, 247, 250, 0.1);
+  color: var(--unknown-admin-text);
+}
+
+/* danger actions (delete / reset / ban) stay unmistakably red and distinct
+   from Save/Update — existing confirmation dialogs are untouched */
+.btn-danger,
+.btn-outline-danger:hover {
+  background-color: #d93a4a;
+  border-color: #d93a4a;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  color: #ff8f98;
+  border-color: rgba(255, 92, 108, 0.55);
+}
+
+.btn-outline-success:hover {
+  background-color: rgba(46, 204, 113, 0.85);
+  border-color: rgba(46, 204, 113, 0.85);
+}
+
+.btn-link {
+  color: var(--unknown-admin-cyan);
+}
+
+/* --- forms --- */
+.form-control,
+.custom-select {
+  background-color: rgba(3, 8, 18, 0.72);
+  border: 1px solid rgba(99, 229, 255, 0.24);
+  color: var(--unknown-admin-text);
+}
+
+.form-control:focus,
+.custom-select:focus {
+  background-color: rgba(3, 8, 18, 0.9);
+  border-color: rgba(99, 229, 255, 0.7);
+  color: var(--unknown-admin-text);
+  box-shadow: 0 0 0 0.2rem rgba(24, 168, 255, 0.16);
+}
+
+.form-control::placeholder {
+  color: var(--unknown-admin-muted);
+}
+
+.custom-control-label::before {
+  background-color: rgba(3, 8, 18, 0.72);
+  border-color: rgba(99, 229, 255, 0.3);
+}
+
+/* --- cards / modals / panels --- */
+.card {
+  background: var(--unknown-admin-surface);
+  border: 1px solid var(--unknown-admin-line);
+  color: var(--unknown-admin-text);
+}
+
+.modal-content {
+  background: var(--unknown-admin-surface-2);
+  border: 1px solid var(--unknown-admin-line);
+  color: var(--unknown-admin-text);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--unknown-admin-line-soft);
+}
+
+.close {
+  color: var(--unknown-admin-text);
+  text-shadow: none;
+  opacity: 0.7;
+}
+
+.close:hover {
+  color: var(--unknown-admin-text);
+  opacity: 1;
+}
+
+/* --- alerts --- */
+.alert-success {
+  background-color: rgba(46, 204, 113, 0.14);
+  border-color: rgba(46, 204, 113, 0.4);
+  color: #a9f7c4;
+}
+
+.alert-danger {
+  background-color: rgba(255, 92, 108, 0.14);
+  border-color: rgba(255, 92, 108, 0.4);
+  color: #ffc2c8;
+}
+
+.alert-warning {
+  background-color: rgba(245, 165, 36, 0.14);
+  border-color: rgba(245, 165, 36, 0.4);
+  color: #ffe3b3;
+}
+
+.alert-info {
+  background-color: rgba(99, 229, 255, 0.12);
+  border-color: rgba(99, 229, 255, 0.35);
+  color: var(--unknown-admin-cyan);
+}
+
+/* --- dashboard / statistics --- */
+.unknown-admin-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.unknown-admin-stat {
+  min-width: 130px;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid var(--unknown-admin-line);
+  border-radius: 6px;
+  background: var(--unknown-admin-surface);
+  text-align: center;
+}
+
+.unknown-admin-stat .value {
+  display: block;
+  color: var(--unknown-admin-text);
+  font-family: var(--unknown-admin-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.unknown-admin-stat .label {
+  color: var(--unknown-admin-muted);
+  font-family: var(--unknown-admin-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.unknown-admin-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.unknown-admin-status {
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--unknown-admin-line);
+  font-family: var(--unknown-admin-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--unknown-admin-muted);
+}
+
+.unknown-admin-status b {
+  color: var(--unknown-admin-text);
+}
+
+.unknown-admin-status.is-open b,
+.unknown-admin-status.is-public b,
+.unknown-admin-status.is-visible b {
+  color: #7bf5ab;
+}
+
+.unknown-admin-status.is-closed b,
+.unknown-admin-status.is-private b,
+.unknown-admin-status.is-hidden b {
+  color: #ffd9a0;
+}
+
+/* --- shortcuts row (View Site / Challenges / Scoreboard) --- */
+.unknown-admin-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.unknown-admin-shortcuts a {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid rgba(99, 229, 255, 0.4);
+  border-radius: 4px;
+  color: var(--unknown-admin-cyan);
+  font-family: var(--unknown-admin-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.unknown-admin-shortcuts a:hover {
+  background: rgba(21, 156, 255, 0.14);
+  color: #bff7ff;
+}
+
+/* --- misc --- */
+::selection {
+  background: rgba(21, 156, 255, 0.35);
+  color: var(--unknown-admin-text);
+}
+
+@media (max-width: 767.98px) {
+  .unknown-admin-stat {
+    min-width: 45%;
+  }
+}

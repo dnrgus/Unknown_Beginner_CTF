@@ -1,7 +1,8 @@
 from flask import render_template
 
 from CTFd.admin import admin
-from CTFd.models import Challenges, Fails, Solves, Teams, Tracking, Users, db
+from CTFd.models import Challenges, Fails, Solves, Submissions, Teams, Tracking, Users, db
+from CTFd.utils import get_config
 from CTFd.utils.decorators import admins_only
 from CTFd.utils.modes import get_model
 from CTFd.utils.updates import update_check
@@ -70,6 +71,8 @@ def statistics():
         most_solved = max(solve_data, key=solve_data.get)
         least_solved = min(solve_data, key=solve_data.get)
 
+    submission_count = Submissions.query.count()
+
     db.session.close()
 
     return render_template(
@@ -84,4 +87,8 @@ def statistics():
         solve_data=solve_data,
         most_solved=most_solved,
         least_solved=least_solved,
+        submission_count=submission_count,
+        registration_visibility=get_config("registration_visibility"),
+        challenge_visibility=get_config("challenge_visibility"),
+        score_visibility=get_config("score_visibility"),
     )

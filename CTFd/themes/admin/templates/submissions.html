@@ -124,7 +124,7 @@
 							</a>
 						</td>
 						<td>
-							{{ sub.type }}
+							<span class="unknown-admin-result {{ 'is-correct' if sub.type == 'correct' else 'is-incorrect' }}">{{ sub.type }}</span>
 						</td>
 						<td class="flag" id="{{ sub.id }}">
 							<button class="btn btn-link p-0 float-left copy-flag" type="button">

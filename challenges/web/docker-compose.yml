@@ -1,0 +1,27 @@
+services:
+  web01-source-hunter:
+    build: ./source-hunter/deploy
+    container_name: unknown-web01-source-hunter
+    environment:
+      - FLAG=UNKNOWN{view_source_is_a_superpower}
+    ports:
+      - "8101:5000"
+    restart: unless-stopped
+
+  web02-cookie-monster:
+    build: ./cookie-monster/deploy
+    container_name: unknown-web02-cookie-monster
+    environment:
+      - FLAG=UNKNOWN{cookies_are_client_side}
+    ports:
+      - "8102:5000"
+    restart: unless-stopped
+
+  web03-baby-sql:
+    build: ./baby-sql/deploy
+    container_name: unknown-web03-baby-sql
+    environment:
+      - FLAG=UNKNOWN{baby_sqli_login_bypass}
+    ports:
+      - "8103:5000"
+    restart: unless-stopped

@@ -39,32 +39,6 @@
                 </small>
               </div>
 
-              <div class="mb-2">
-                <b>{{ form.website.label(class="mb-2") }}</b>
-                {{ form.website(class="form-control") }}
-                <small class="form-text text-muted">
-                  {{ form.website.description }}
-                </small>
-              </div>
-
-              <div class="mb-2">
-                <b>{{ form.affiliation.label(class="mb-2") }}</b>
-                {{ form.affiliation(class="form-control") }}
-                <small class="form-text text-muted">
-                  {{ form.affiliation.description }}
-                </small>
-              </div>
-
-              <div class="mb-2">
-                <b>{{ form.country.label(class="mb-2") }}</b>
-                {{ form.country(class="form-select") }}
-                <small class="form-text text-muted">
-                  {{ form.country.description }}
-                </small>
-              </div>
-
-              <hr>
-
               {{ render_extra_fields(form.extra) }}
 
               <div id="results">
@@ -219,21 +193,6 @@
         </a>
       {% endif %}
 
-      {% if team.affiliation %}
-        <h3 class="d-inline-block">
-          <span class="badge bg-primary">{{ team.affiliation }}</span>
-        </h3>
-      {% endif %}
-
-      {% if team.country %}
-        <h3 class="d-inline-block">
-          <span class="badge bg-primary">
-            <i class="flag-{{ team.country.lower() }}"></i>
-            {{ lookup_country_code(team.country) }}
-          </span>
-        </h3>
-      {% endif %}
-
       {% if team.bracket_id %}
         <div class="pt-2">
           <h2>
@@ -301,16 +260,6 @@
         </a>
       </div>
 
-      <div class="pt-3">{% if team.website and (team.website.startswith('http://') or team.website.startswith('https://')) %}
-          <a href="{{ team.website }}" target="_blank" style="color: inherit;" rel="noopener">
-            <i
-                class="fas fa-external-link-alt fa-2x px-2 pt-2"
-                data-toggle="tooltip" data-placement="top"
-                title="{{ team.website }}"
-            ></i>
-          </a>
-        {% endif %}
-        </div>
       </div>
 
   </div>

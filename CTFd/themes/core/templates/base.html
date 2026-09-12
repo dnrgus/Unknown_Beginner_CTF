@@ -4,12 +4,13 @@
   <title>{{ title or Configs.ctf_name }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
+  <link rel="icon" href="data:,">
 
   {{ meta | safe }}
 
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='core', path='css/unknown.css') }}?v=unknown-polish-5">
   {% endblock %}
 
   {{ Plugins.styles }}
@@ -49,17 +50,92 @@
 
 {% include "components/snackbar.html" %}
 
-<footer class="footer">
-  <div class="container text-center">
-    <a href="https://ctfd.io" class="text-secondary">
-      <small class="text-muted">
-        {% trans %}Powered by CTFd{% endtrans %}
-      </small>
-    </a>
+<footer class="footer unknown-footer">
+  <div class="container">
+    <div class="unknown-footer-inner">
+      <div class="unknown-footer-brand">
+        <div>
+          <strong>UNKNOWN CTF</strong>
+          <p>Think. Analyze. Capture the Flag.</p>
+        </div>
+      </div>
+
+      <nav class="unknown-footer-links" aria-label="{% trans %}Footer{% endtrans %}">
+        <a href="{{ url_for('views.static_html', route='/') }}">HOME</a>
+        <a href="{{ url_for('challenges.listing') }}">CHALLENGES</a>
+        {% if Configs.account_visibility != 'admins' and Configs.score_visibility != 'admins' %}
+          <a href="{{ url_for('scoreboard.listing') }}">SCOREBOARD</a>
+        {% endif %}
+        <a href="{{ url_for('views.static_html', route='guide') }}">GUIDE</a>
+      </nav>
+    </div>
+
+    <div class="unknown-footer-base">
+      <span>&copy; UNKNOWN &mdash; Beginner CTF</span>
+      <a href="https://ctfd.io" class="text-secondary">
+        <small class="text-muted">
+          {% trans %}Powered by CTFd{% endtrans %}
+        </small>
+      </a>
+    </div>
   </div>
 </footer>
 
 {% include "components/notifications.html" %}
+
+<script>
+  // Global chrome behavior: runs on every page regardless of how a template's
+  // own "scripts" block is written. Pure presentation, no CTFd logic touched.
+  (function () {
+    var nav = document.querySelector(".unknown-navbar");
+    if (nav) {
+      var onScroll = function () {
+        nav.classList.toggle("is-scrolled", window.scrollY > 8);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    var toggler = document.querySelector(".unknown-navbar .navbar-toggler");
+    var menu = document.getElementById("base-navbars");
+    if (toggler && menu) {
+      var isOpen = function () { return menu.classList.contains("show"); };
+      var close = function () { if (isOpen()) toggler.click(); };
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isOpen()) {
+          close();
+          toggler.focus();
+        }
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!isOpen()) return;
+        if (menu.contains(e.target) || toggler.contains(e.target)) return;
+        close();
+      });
+    }
+
+    // Opt-in "reveal on scroll" for any section marked .unknown-reveal.
+    // Fires once per element, never re-animates on re-scroll.
+    var revealEls = document.querySelectorAll(".unknown-reveal");
+    if (revealEls.length) {
+      if ("IntersectionObserver" in window) {
+        var revealer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -10% 0px" });
+        revealEls.forEach(function (el) { revealer.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add("is-visible"); });
+      }
+    }
+  })();
+</script>
 
 {% block scripts %}
   {{ Assets.js("assets/js/page.js") }}

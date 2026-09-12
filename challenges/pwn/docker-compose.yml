@@ -1,0 +1,33 @@
+services:
+  pwn01-password-please:
+    build:
+      context: ./password-please
+      dockerfile: deploy/Dockerfile
+    container_name: unknown-pwn01-password-please
+    environment:
+      - FLAG=UNKNOWN{strings_find_plaintext}
+    ports:
+      - "8201:5000"
+    restart: unless-stopped
+
+  pwn02-overflow-me:
+    build:
+      context: ./overflow-me
+      dockerfile: deploy/Dockerfile
+    container_name: unknown-pwn02-overflow-me
+    environment:
+      - FLAG=UNKNOWN{overflow_changes_control_data}
+    ports:
+      - "8202:5000"
+    restart: unless-stopped
+
+  pwn03-return-to-win:
+    build:
+      context: ./return-to-win
+      dockerfile: deploy/Dockerfile
+    container_name: unknown-pwn03-return-to-win
+    environment:
+      - FLAG=UNKNOWN{return_address_goes_to_win}
+    ports:
+      - "8203:5000"
+    restart: unless-stopped

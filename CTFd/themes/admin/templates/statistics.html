@@ -4,39 +4,72 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Statistics</h1>
+            <div class="unknown-admin-shortcuts">
+                <a href="{{ url_for('views.static_html', route='/') }}" target="_blank">VIEW SITE</a>
+                <a href="{{ url_for('challenges.listing') }}" target="_blank">VIEW CHALLENGES</a>
+                <a href="{{ url_for('scoreboard.listing') }}" target="_blank">VIEW SCOREBOARD</a>
+            </div>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row mb-4">
-            <div class="col-md-12 text-center">
-                <div class="d-flex justify-content-center align-items-center flex-wrap">
-                    <div class="mx-4 my-2">
-                        <h5><b>{{ user_count }}</b> <small class="text-muted">users</small></h5>
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div class="unknown-admin-stat-row">
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ user_count }}</span>
+                        <span class="label">Users</span>
                     </div>
                     {% if get_config('user_mode') == 'teams' %}
-                        <div class="mx-4 my-2">
-                            <h5><b>{{ team_count }}</b> <small class="text-muted">teams</small></h5>
+                        <div class="unknown-admin-stat">
+                            <span class="value">{{ team_count }}</span>
+                            <span class="label">Teams</span>
                         </div>
                     {% endif %}
-                    <div class="mx-4 my-2">
-                        <h5><b>{{ ip_count }}</b> <small class="text-muted">IPs</small></h5>
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ challenge_count }}</span>
+                        <span class="label">Challenges</span>
                     </div>
-                    <div class="mx-4 my-2">
-                        <h5><b>{{ total_points }}</b> <small class="text-muted">points</small></h5>
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ solve_count }}</span>
+                        <span class="label">Solves</span>
                     </div>
-                    <div class="mx-4 my-2">
-                        <h5><b>{{ challenge_count }}</b> <small class="text-muted">challenges</small></h5>
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ submission_count }}</span>
+                        <span class="label">Submissions</span>
+                    </div>
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ total_points }}</span>
+                        <span class="label">Total Points</span>
+                    </div>
+                    <div class="unknown-admin-stat">
+                        <span class="value">{{ ip_count }}</span>
+                        <span class="label">Unique IPs</span>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center flex-wrap">
+
+                {% if registration_visibility and challenge_visibility and score_visibility %}
+                <div class="unknown-admin-status-row">
+                    <span class="unknown-admin-status {{ 'is-open' if registration_visibility == 'public' else 'is-closed' }}">
+                        REGISTRATION <b>{{ registration_visibility | upper }}</b>
+                    </span>
+                    <span class="unknown-admin-status {{ 'is-visible' if challenge_visibility == 'public' else 'is-hidden' }}">
+                        CHALLENGES <b>{{ challenge_visibility | upper }}</b>
+                    </span>
+                    <span class="unknown-admin-status {{ 'is-public' if score_visibility == 'public' else 'is-private' }}">
+                        SCOREBOARD <b>{{ score_visibility | upper }}</b>
+                    </span>
+                </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-center align-items-center flex-wrap mt-3">
                     {% if most_solved %}
                         <div class="mx-4 my-2">
-                            <small>Most Solved: <b>{{ most_solved }}</b> ({{ solve_data[most_solved] }})</small>
+                            <small class="text-muted">Most Solved: <b class="text-body">{{ most_solved }}</b> ({{ solve_data[most_solved] }})</small>
                         </div>
                     {% endif %}
                     {% if least_solved %}
                         <div class="mx-4 my-2">
-                            <small>Least Solved: <b>{{ least_solved }}</b> ({{ solve_data[least_solved] }})</small>
+                            <small class="text-muted">Least Solved: <b class="text-body">{{ least_solved }}</b> ({{ solve_data[least_solved] }})</small>
                         </div>
                     {% endif %}
                 </div>

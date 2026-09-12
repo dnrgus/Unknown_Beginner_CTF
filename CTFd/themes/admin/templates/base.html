@@ -11,6 +11,7 @@
 	{{ Assets.css("assets/css/fonts.scss", theme="admin") }}
 	{{ Assets.css("assets/css/admin.scss", theme="admin") }}
 	{{ Assets.css("assets/css/codemirror.scss", theme="admin") }}
+	<link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='admin', path='css/unknown-admin.css') }}?v=unknown-admin-1">
 	<script type="text/javascript">
 		var init = {
 			'urlRoot': "{{ request.script_root }}",
@@ -109,6 +110,21 @@
 					{% endif %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('views.static_html', route='/') }}" target="_blank" data-toggle="tooltip" title="View Site">
+							<i class="fas fa-external-link-alt action-icon"></i>Site
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('challenges.listing') }}" target="_blank" data-toggle="tooltip" title="View Challenges as a player">
+							<i class="fas fa-flag action-icon"></i>Challenges
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('scoreboard.listing') }}" target="_blank" data-toggle="tooltip" title="View Scoreboard">
+							<i class="fas fa-list-ol action-icon"></i>Scoreboard
+						</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="https://docs.ctfd.io/" target="_blank">
 							<i class="far fa-question-circle"></i>

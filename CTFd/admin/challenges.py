@@ -1,7 +1,7 @@
 from flask import abort, render_template, request, url_for
 
 from CTFd.admin import admin
-from CTFd.models import Challenges, Flags, Solves
+from CTFd.models import Challenges, Flags, Solves, db
 from CTFd.plugins.challenges import CHALLENGE_CLASSES, get_chal_class
 from CTFd.schemas.tags import TagSchema
 from CTFd.utils.decorators import admins_only
@@ -25,12 +25,21 @@ def challenges_listing():
     challenges = query.all()
     total = query.count()
 
+    # Read-only summary used by the admin listing to surface solve counts
+    # (operator convenience only — does not change scoring/ranking logic).
+    solve_counts = dict(
+        db.session.query(Solves.challenge_id, db.func.count(Solves.id))
+        .group_by(Solves.challenge_id)
+        .all()
+    )
+
     return render_template(
         "admin/challenges/challenges.html",
         challenges=challenges,
         total=total,
         q=q,
         field=field,
+        solve_counts=solve_counts,
     )
 
 

@@ -27,7 +27,7 @@ def listing():
     field = request.args.get("field", "name")
     filters = []
 
-    if field not in ("name", "affiliation", "website"):
+    if field not in ("name",):
         field = "name"
 
     if q:

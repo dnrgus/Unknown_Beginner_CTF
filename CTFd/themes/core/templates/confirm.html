@@ -1,61 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="jumbotron">
-    <div class="container">
-      <h1>
-        {% trans %}Confirm{% endtrans %}
-      </h1>
-    </div>
-  </div>
+  <div class="unknown-auth">
+    <div class="unknown-auth-glow" aria-hidden="true"></div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
-        {% include "components/errors.html" %}
+    <div class="unknown-auth-card">
+      <p class="unknown-kicker">UNKNOWN CTF</p>
+      <h1>CONFIRM EMAIL</h1>
 
+      {% include "components/errors.html" %}
+
+      <div class="unknown-auth-copy">
         {% if request.args.get('flow') == "init" %}
-          <h5 class="text-center">
-            {% trans %}To send a confirmation email to your email address, please click the button below.{% endtrans %}
-          </h5>
-          <br>
-          <h5 class="text-center">
-            {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
-          </h5>
-          <h5 class="text-center">
-            {% trans %}If the email doesn’t arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}
-          </h5>
-        {% else%}
-          <h5 class="text-center">
-            {% trans %}We've sent a confirmation email to your email address.{% endtrans %}
-          </h5>
-          <br>
-          <h5 class="text-center">
-            {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
-          </h5>
-          <h5 class="text-center">
-            {% trans %}If the email doesn’t arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}
-          </h5>
+          <p>{% trans %}To send a confirmation email to your email address, please click the button below.{% endtrans %}</p>
+        {% else %}
+          <p>{% trans %}We've sent a confirmation email to your email address.{% endtrans %}</p>
         {% endif %}
-
-        <hr>
-
-        {% with form = Forms.auth.ConfirmForm() %}
-          <form method="POST" action="{{ url_for('auth.confirm') }}">
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                {{ form.submit(class="btn btn-primary w-100 p-2") }}
-              </div>
-              <div class="mb-3 col-md-6">
-                <a href="{{ url_for('views.settings') }}" class="btn btn-secondary w-100 p-2">
-                  {% trans %}Change Email Address{% endtrans %}
-                </a>
-              </div>
-              {{ form.nonce() }}
-            </div>
-          </form>
-        {% endwith %}
+        <p>{% trans %}Please click the link in that email to confirm your account.{% endtrans %}</p>
+        <p class="unknown-hint">{% trans %}If the email doesn't arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}</p>
       </div>
+
+      {% with form = Forms.auth.ConfirmForm() %}
+        <form method="POST" action="{{ url_for('auth.confirm') }}" class="unknown-auth-form">
+          {{ form.submit(class="btn unknown-btn unknown-btn-primary w-100", value="RESEND CONFIRMATION") }}
+          <a href="{{ url_for('views.settings') }}" class="btn unknown-btn unknown-btn-secondary w-100">
+            {% trans %}Change Email Address{% endtrans %}
+          </a>
+          {{ form.nonce() }}
+        </form>
+      {% endwith %}
     </div>
   </div>
 {% endblock %}

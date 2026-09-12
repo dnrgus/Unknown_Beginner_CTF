@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="jumbotron">
+  <div class="jumbotron unknown-board-hero">
     <div class="container">
-      <h1>
-        {% trans %}Challenges{% endtrans %}
-      </h1>
+      <p class="unknown-kicker">UNKNOWN CHALLENGE BOARD</p>
+      <h1>CHALLENGES</h1>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container unknown-board-container">
     <div class="row">
       <div class="col-md-12">
         {% include "components/errors.html" %}
@@ -18,6 +17,7 @@
 
     <div 
       x-data="ChallengeBoard" 
+      x-init="$data.selectedCategory = null"
       @load-challenges.window="loadChallenges()" 
       @load-challenge.window="loadChallenge($event.detail)"
     >
@@ -27,24 +27,47 @@
       ></div>
 
       <div x-show="!loaded">
-        <div class="min-vh-50 d-flex align-items-center">
+        <div class="min-vh-50 d-flex align-items-center unknown-board-loading">
           <div class="text-center w-100">
             <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+            <p class="mt-3 mb-0">Loading targets...</p>
           </div>
         </div>
       </div>
 
       <div x-show="loaded">
+        <div class="unknown-board-toolbar">
+          <div class="unknown-progress" x-show="challenges.length">
+            <span>YOUR PROGRESS</span>
+            <strong><span x-text="challenges.filter((c) => c.solved_by_me).length"></span> / <span x-text="challenges.length"></span> SOLVED</strong>
+            <div class="unknown-progress-bar" aria-hidden="true">
+              <i :style="`width: ${challenges.length ? (challenges.filter((c) => c.solved_by_me).length / challenges.length) * 100 : 0}%`"></i>
+            </div>
+          </div>
+        </div>
+
+        <nav class="unknown-category-filter" aria-label="Challenge category filter">
+          <button type="button" :class="{ active: $data.selectedCategory == null }" @click.prevent.stop="$data.selectedCategory = null">ALL</button>
+          <template x-for="(category, idx) in getCategories()" :key="idx">
+            <button type="button" :class="{ active: $data.selectedCategory === category }" @click.prevent.stop="$data.selectedCategory = category" x-text="category"></button>
+          </template>
+        </nav>
+
+        <div class="unknown-empty-board" x-show="challenges.length === 0">
+          <span>NO TARGETS LOADED</span>
+          <p>Challenges will appear here when they are visible to your account.</p>
+        </div>
+
         <template x-for="(category, idx) in getCategories()" :key="idx">
-          <div class="pt-5">
+          <div class="unknown-category-section" x-show="$data.selectedCategory == null || $data.selectedCategory === category">
             <div class="category-header mb-3">
               <h3 x-text="category"></h3>
             </div>
 
-            <div class="category-challenges d-flex flex-column">
+            <div class="category-challenges">
               <div class="challenges-row row">
                 <template x-for="(c, idx) in getChallenges(category)" :key="c.id">
-                  <div class="col-sm-6 col-md-4 col-lg-3 my-3">
+                  <div class="col-sm-6 col-lg-4 col-xl-3 my-3">
                     <button
                         class="challenge-button btn btn-dark w-100 h-100"
                         :class="[
@@ -54,9 +77,20 @@
                         :value="c.id" @click="loadChallenge(c.id)"
                     >
 
-                      <div class="challenge-inner my-3">
+                      <div class="challenge-inner">
+                        <div class="unknown-card-topline">
+                          <span class="unknown-card-category" x-text="c.category"></span>
+                          <span class="unknown-card-difficulty"
+                            x-show="(c.tags || []).some((tag) => ['easy', 'normal', 'hard'].includes(String(tag.value).toLowerCase()))"
+                            x-text="String((c.tags || []).find((tag) => ['easy', 'normal', 'hard'].includes(String(tag.value).toLowerCase()))?.value || '').toUpperCase()"
+                          ></span>
+                        </div>
                         <p x-text="c.name"></p>
-                        <span x-text="c.value"></span>
+                        <div class="unknown-card-bottomline">
+                          <span><b x-text="c.value"></b> PTS</span>
+                          <span class="unknown-card-status" x-show="!c.solved_by_me">UNSOLVED</span>
+                          <span class="unknown-card-status solved" x-show="c.solved_by_me"><i class="fas fa-check"></i> SOLVED</span>
+                        </div>
                       </div>
                     </button>
                   </div>

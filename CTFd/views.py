@@ -355,6 +355,9 @@ def static_html(route):
     :param route:
     :return:
     """
+    if route in ("index", "guide"):
+        return render_template(f"{route}.html", title="UNKNOWN CTF")
+
     page = get_page(route)
     if page is None:
         abort(404)

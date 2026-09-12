@@ -1,0 +1,3 @@
+handle: unknown_nova
+bio: same learner, different mirror
+recovery phrase: UNKNOWN{username_pivot_found}

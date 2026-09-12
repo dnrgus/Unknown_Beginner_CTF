@@ -161,8 +161,6 @@ class PublicUserSearchForm(BaseForm):
         _l("Search Field"),
         choices=[
             ("name", _l("Name")),
-            ("affiliation", _l("Affiliation")),
-            ("website", _l("Website")),
         ],
         default="name",
         validators=[InputRequired()],

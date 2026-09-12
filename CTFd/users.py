@@ -18,7 +18,7 @@ users = Blueprint("users", __name__)
 def listing():
     q = request.args.get("q")
     field = request.args.get("field", "name")
-    if field not in ("name", "affiliation", "website"):
+    if field not in ("name",):
         field = "name"
 
     filters = []
@@ -45,6 +45,7 @@ def listing():
     )
 
 
+@users.route("/account")
 @users.route("/profile")
 @users.route("/user")
 @authed_only

@@ -82,6 +82,8 @@
 						<th class="sort-col text-center"><b>Value</b></th>
 						<th class="sort-col text-center"><b>Type</b></th>
 						<th class="sort-col text-center"><b>State</b></th>
+						<th class="sort-col text-center"><b>Solves</b></th>
+						<th class="text-center"><b>Setup</b></th>
 						<th class="sort-col text-center"><b>Solution</b></th>
 					</tr>
 					</thead>
@@ -108,6 +110,21 @@
 							<td class="text-center">
 								{% set badge_state = 'badge-danger' if challenge.state == 'hidden' else 'badge-success' %}
 								<span class="badge {{ badge_state }}">{{ challenge.state }}</span>
+							</td>
+							<td class="text-center unknown-admin-mono">{{ solve_counts.get(challenge.id, 0) }}</td>
+							<td class="text-center unknown-admin-setup">
+								{% if not challenge.flags %}
+									<span class="badge badge-danger" data-toggle="tooltip" title="This challenge has no flag and can never be solved">NO FLAG</span>
+								{% endif %}
+								{% if not challenge.description %}
+									<span class="badge badge-warning" data-toggle="tooltip" title="This challenge has no description">NO DESCRIPTION</span>
+								{% endif %}
+								{% if challenge.flags and challenge.description %}
+									<span class="text-muted">
+										{{ challenge.hints | length }} hint{{ challenge.hints|length|pluralize }},
+										{{ challenge.files | length }} file{{ challenge.files|length|pluralize }}
+									</span>
+								{% endif %}
 							</td>
 							<td class="text-center">
 								{% if challenge.solution_id %}

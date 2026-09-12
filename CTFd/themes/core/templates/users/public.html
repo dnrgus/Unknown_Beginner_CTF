@@ -1,218 +1,150 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="jumbotron">
+  <section class="unknown-board-hero unknown-profile-hero">
     <div class="container">
-      <h1>{{ user.name }}</h1>
-
-      {% if user.team_id %}
-        <h2>
-          <a href="{{ url_for('teams.public', team_id=user.team_id) }}">
-            <span class="badge bg-secondary">
-              {{ user.team.name }}
-            </span>
-          </a>
-        </h2>
-      {% endif %}
-
-      <div class="pt-2">
-        {% if user.oauth_id %}
-          <a href="https://majorleaguecyber.org/u/{{ user.name }}">
-            <h3 class="d-inline-block mx-1"><span class="badge rounded-pill bg-primary">{% trans %}Official{% endtrans %}</span></h3>
-          </a>
-        {% endif %}
-
-        {% if user.affiliation %}
-          <h3 class="d-inline-block mx-1">
-            <span class="badge rounded-pill bg-primary">{{ user.affiliation }}</span>
-          </h3>
-        {% endif %}
-
-        {% if user.country %}
-          <h3 class="d-inline-block mx-1">
-            <span class="badge rounded-pill bg-primary">
-                <i class="flag-{{ user.country.lower() }}"></i>
-                {{ lookup_country_code(user.country) }}
-            </span>
-          </h3>
-        {% endif %}
-      </div>
-
-      {% if user.bracket_id %}
-        <div class="pt-2">
-          <h2>
-            <span class="badge text-bg-light">
-              {{ user.bracket.name }}
-            </span>
-          </h2>
+      <div class="unknown-profile-head">
+        <div class="unknown-avatar" aria-hidden="true">{{ user.name[0] | upper }}</div>
+        <div class="unknown-profile-id">
+          <p class="unknown-kicker">UNKNOWN CTF</p>
+          <h1>{{ user.name }}</h1>
+          <div class="unknown-profile-badges">
+            {% if user.team_id %}
+              <a href="{{ url_for('teams.public', team_id=user.team_id) }}" class="unknown-chip">{{ user.team.name }}</a>
+            {% endif %}
+            {% if user.bracket_id %}
+              <span class="unknown-chip">{{ user.bracket.name }}</span>
+            {% endif %}
+            {% if user.oauth_id %}
+              <a href="https://majorleaguecyber.org/u/{{ user.name }}" class="unknown-chip" rel="noopener">{% trans %}Official{% endtrans %}</a>
+            {% endif %}
+          </div>
         </div>
-      {% endif %}
-
-      <div class="pt-2">
-        {% for field in user.fields %}
-          <h3 class="d-block">
-            {{ field.name }}: {{ field.value }}
-          </h3>
-        {% endfor %}
       </div>
 
-      {% if user.fields %}
-        <hr class="w-50 mx-auto">
-      {% endif %}
-
-      <div>
-        <h2 class="text-center">
-          {% if account.place %}
-            {{ account.place }} <small>place</small>
-          {% endif %}
-        </h2>
-        <h2 class="text-center">
-          {% if account.place %}
-            {{ account.score }} <small>points</small>
-          {% endif %}
-        </h2>
-      </div>
-
-      <div class="pt-3">
-        {% if user.website %}
-          <a href="{{ user.website }}" target="_blank" style="color: inherit;" rel="noopener">
-            <i
-                class="fas fa-external-link-alt fa-2x px-2" data-toggle="tooltip" data-placement="top"
-                title="{{ user.website }}"
-            ></i>
-          </a>
+      <div class="unknown-stat-row">
+        {% if account and account.place %}
+          <div class="unknown-stat">
+            <span>RANK</span>
+            <strong>{{ account.place }}</strong>
+          </div>
         {% endif %}
+        {% if account and account.place %}
+          <div class="unknown-stat">
+            <span>SCORE</span>
+            <strong>{{ account.score }} <i>PTS</i></strong>
+          </div>
+        {% endif %}
+        <div class="unknown-stat">
+          <span>SOLVED</span>
+          <strong>{{ user.solves | length }} <i>{% trans %}CHALLENGES{% endtrans %}</i></strong>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container">
+  </section>
+
+  <div class="container unknown-profile-body">
     {% include "components/errors.html" %}
+
+    {% if user.fields %}
+      <div class="unknown-profile-fields">
+        {% for field in user.fields %}
+          <div><span>{{ field.name }}</span><p>{{ field.value }}</p></div>
+        {% endfor %}
+      </div>
+    {% endif %}
 
     {% set solves = user.solves %}
     {% set awards = user.awards %}
-    {% if solves or awards %}
 
+    {% if solves or awards %}
       {% if awards %}
-        <div class="row">
-          <div class="col-md-12">
-            <h3>{% trans %}Awards{% endtrans %}</h3>
-          </div>
-          {% for award in awards %}
-            <div class="col-md-3 col-sm-6">
-              <p class="text-center">
+        <section class="unknown-profile-section">
+          <div class="unknown-score-section-heading"><span>{% trans %}AWARDS{% endtrans %}</span></div>
+          <div class="unknown-award-grid">
+            {% for award in awards %}
+              <article>
                 <i class="award-icon award-{{ award.icon }} fa-2x"></i>
-                <br>
                 <strong>{{ award.name }}</strong>
-              </p>
-              <p class="text-center">{{ award.category or "" }}</p>
-              <p class="text-center">{{ award.description or "" }}</p>
-              <p class="text-center">{{ award.value }}</p>
-            </div>
-          {% endfor %}
-        </div>
+                <p>{{ award.description or "" }}</p>
+                <span class="unknown-chip">{{ award.value }} PTS</span>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
       {% endif %}
 
-      <br>
-
-      <div class="row">
-        <div class="col-md-12">
-          <h3>Solves</h3>
-          <table class="table table-striped align-middle">
-            <thead>
+      <section class="unknown-profile-section">
+        <div class="unknown-score-section-heading"><span>{% trans %}RECENT SOLVES{% endtrans %}</span></div>
+        <table class="table table-striped align-middle unknown-leaderboard-table">
+          <thead>
+          <tr>
+            <th class="text-start ps-3">{% trans %}Challenge{% endtrans %}</th>
+            <th class="d-none d-md-table-cell">{% trans %}Category{% endtrans %}</th>
+            <th class="text-end">{% trans %}Value{% endtrans %}</th>
+            <th class="d-none d-md-table-cell text-end">{% trans %}Time{% endtrans %}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for solve in solves %}
             <tr>
-              <th>{% trans %}Challenge{% endtrans %}</th>
-              <th class="d-none d-md-block d-lg-block">{% trans %}Category{% endtrans %}</th>
-              <th>{% trans %}Value{% endtrans %}</th>
-              <th>{% trans %}Time{% endtrans %}</th>
+              <td class="text-start ps-3">
+                <a href="{{ url_for('challenges.listing') }}#{{ solve.challenge.name }}-{{ solve.challenge.id }}">
+                  {{ solve.challenge.name }}
+                </a>
+              </td>
+              <td class="d-none d-md-table-cell">{{ solve.challenge.category }}</td>
+              <td class="text-end"><strong>{{ solve.challenge.value }}</strong></td>
+              <td class="d-none d-md-table-cell text-end solve-time">
+                <span data-time="{{ solve.date | isoformat }}"></span>
+              </td>
             </tr>
-            </thead>
-            <tbody>
-            {% for solve in solves %}
-              <tr>
-                <td>
-                  <a href="{{ url_for('challenges.listing') }}#{{ solve.challenge.name }}-{{ solve.challenge.id }}">
-                    {{ solve.challenge.name }}
-                  </a>
-                </td>
-                <td class="d-none d-md-block d-lg-block">{{ solve.challenge.category }}</td>
-                <td>{{ solve.challenge.value }}</td>
-                <td class="solve-time">
-                  <span data-time="{{ solve.date | isoformat }}"></span>
-                </td>
-              </tr>
-            {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          {% endfor %}
+          </tbody>
+        </table>
+      </section>
 
-      <div class="clearfix"></div>
+      <section class="unknown-profile-section" x-data="UserGraphs">
+        <div class="unknown-score-section-heading"><span>{% trans %}SCORE PROGRESSION{% endtrans %}</span></div>
 
-      <div class="row" x-data="UserGraphs">
-        <div class="col-md-6 d-none d-md-block d-lg-block py-4">
-          <div class="progress">
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
-              :style="{ width: `${getSolvePercentage()}%`, 'background-color': 'rgb(0, 209, 64)' }" 
-            >
+        <div class="unknown-profile-breakdown d-none d-md-flex">
+          <div class="unknown-profile-bar">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar"
+                   :style="{ width: `${getSolvePercentage()}%`, 'background-color': 'rgb(0, 209, 64)' }"></div>
+              <div class="progress-bar" role="progressbar"
+                   :style="{ width: `${getFailPercentage()}%`, 'background-color': 'rgb(207, 38, 0)' }"></div>
             </div>
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
-              :style="{ width: `${getFailPercentage()}%`, 'background-color': 'rgb(207, 38, 0)' }"
-            >
+            <div class="unknown-profile-legend">
+              <span><svg height="12" width="12"><circle cx="6" cy="6" r="5" fill="rgb(0, 209, 64)" /></svg><small x-text="`Solves (${getSolvePercentage()}%)`"></small></span>
+              <span><svg height="12" width="12"><circle cx="6" cy="6" r="5" fill="rgb(207, 38, 0)" /></svg><small x-text="`Fails (${getFailPercentage()}%)`"></small></span>
             </div>
           </div>
-          <div class="ps-2 float-start">
-            <svg height="16" width="16">
-              <circle cx="8" cy="8" r="5" fill="rgb(0, 209, 64)" />
-            </svg>
-            <small x-text="`Solves (${getSolvePercentage()}%)`"></small>
-          </div>
-          <div class="ps-2 float-start">
-            <svg height="16" width="16">
-              <circle cx="8" cy="8" r="5" fill="rgb(207, 38, 0)" />
-            </svg>
-            <small x-text="`Fails (${getFailPercentage()}%)`"></small>
-          </div>
-        </div>
-        <div class="col-md-6 d-none d-md-block d-lg-block py-4">
-          <div class="progress">
-            <template x-for="category in getCategoryBreakdown()" :key="category.name">
-              <div 
-                class="progress-bar" 
-                role="progressbar" 
-                :style="{ width: `${category.percent}%`, 'background-color': category.color }"
-              >
-              </div>
-            </template>
-          </div>
-          <template x-for="category in getCategoryBreakdown()" :key="category.name">
-            <div class="ps-2 float-start">
-              <svg height="16" width="16">
-                <circle cx="8" cy="8" r="5" :fill="category.color" />
-              </svg>
-              <small x-text="`${category.name} (${category.percent}%)`"></small>
+          <div class="unknown-profile-bar">
+            <div class="progress">
+              <template x-for="category in getCategoryBreakdown()" :key="category.name">
+                <div class="progress-bar" role="progressbar"
+                     :style="{ width: `${category.percent}%`, 'background-color': category.color }"></div>
+              </template>
             </div>
-          </template>
-        </div>
-
-        <br class="clearfix">
-
-        <div class="col-md-12 d-none d-md-block d-lg-block py-4">
-          <div id="score-graph" x-ref="scoregraph" class="w-100 d-flex align-items-center">
-            <div class="text-center w-100">
-              <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+            <div class="unknown-profile-legend">
+              <template x-for="category in getCategoryBreakdown()" :key="category.name">
+                <span><svg height="12" width="12"><circle cx="6" cy="6" r="5" :fill="category.color" /></svg><small x-text="`${category.name} (${category.percent}%)`"></small></span>
+              </template>
             </div>
           </div>
         </div>
-      </div>
+
+        <div id="score-graph" x-ref="scoregraph" class="w-100 d-flex align-items-center">
+          <div class="text-center w-100">
+            <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+          </div>
+        </div>
+      </section>
     {% else %}
-      <div class="row min-vh-25">
-        <h3 class="opacity-50 text-center w-100 justify-content-center align-self-center">
-          {% trans %}No solves yet{% endtrans %}
-        </h3>
+      <div class="unknown-score-empty">
+        <span>{% trans %}NO SOLVES YET{% endtrans %}</span>
+        <p>{% trans %}This player hasn't captured a flag yet.{% endtrans %}</p>
       </div>
     {% endif %}
   </div>
@@ -220,12 +152,34 @@
 
 {% block scripts %}
   <script>
-      window.USER = {{ {
+    window.USER = {{ {
       'type': 'user',
       'id': user.id,
       'name': user.name,
       'account_id': user.id,
     } | tojson }};
+
+    window.userScoreGraphChartOptions = {
+      backgroundColor: "transparent",
+      textStyle: { color: "#c6d5e4", fontFamily: "'JetBrains Mono', 'SFMono-Regular', Consolas, Menlo, monospace" },
+      title: { show: false, text: "" },
+      grid: { top: 44, bottom: 64, left: 8, right: 18, containLabel: true },
+      legend: { textStyle: { color: "#93a8ba" }, inactiveColor: "#3c4c5e" },
+      toolbox: { iconStyle: { borderColor: "#93a8ba" } },
+      tooltip: {
+        backgroundColor: "rgba(3, 8, 18, 0.94)", borderColor: "rgba(99, 229, 255, 0.32)",
+        borderWidth: 1, textStyle: { color: "#f4f8fb" }
+      },
+      xAxis: [{ axisLabel: { color: "#93a8ba", hideOverlap: true }, splitLine: { show: false } }],
+      yAxis: [{ axisLabel: { color: "#93a8ba" }, splitNumber: 3, splitLine: { show: false } }],
+      dataZoom: [{
+        top: 6, height: 12, showDataShadow: false, moveHandleSize: 3,
+        backgroundColor: "rgba(255, 255, 255, 0.03)", fillerColor: "rgba(21, 156, 255, 0.1)",
+        borderColor: "rgba(99, 229, 255, 0.14)", textStyle: { color: "#93a8ba" },
+        handleStyle: { color: "#159cff", borderColor: "#159cff" },
+        moveHandleStyle: { color: "rgba(99, 229, 255, 0.2)" }
+      }]
+    };
   </script>
 
   {{ Assets.js("assets/js/users/public.js") }}

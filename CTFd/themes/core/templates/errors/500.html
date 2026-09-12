@@ -1,19 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="unknown-error-page">
+    <div class="unknown-error-card">
+      <p class="unknown-error-code">500</p>
+      <h1>{% trans %}SYSTEM ERROR{% endtrans %}</h1>
+      <p>{% trans %}Something went wrong.{% endtrans %}</p>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="pt-5 mt-5 text-center">
-				<h1>500</h1>
-				<hr class="w-50 m-auto">
-				<br/>
-				<h2>{{ error }}</h2>
-			</div>
-		</div>
-	</div>
-</div>
-
-
+      <div class="unknown-cta-row unknown-error-actions">
+        <a class="btn unknown-btn unknown-btn-primary" href="{{ url_for('views.static_html', route='/') }}">{% trans %}RETURN HOME{% endtrans %}</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

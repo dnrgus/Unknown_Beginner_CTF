@@ -57,6 +57,9 @@ target/
 # JS
 node_modules/
 
+# Local tool caches (not project source)
+.context-compress/
+
 # Flask Profiler files
 flask_profiler.sql
 
@@ -80,6 +83,8 @@ CTFd/uploads
 
 # CTFd exports
 *.zip
+!challenges/osint/developer-mistake/challenge/developer-mistake-repo.zip
+challenges/osint/developer-mistake/challenge/repo/
 
 # non-default plugins
 CTFd/plugins/*
