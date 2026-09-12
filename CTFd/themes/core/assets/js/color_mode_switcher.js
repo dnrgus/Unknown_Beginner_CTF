@@ -19,6 +19,9 @@ function getPreferredTheme() {
  */
 function showActiveTheme(theme) {
   const activeThemeIcon = document.querySelector(".theme-switch i.fas");
+  // The UNKNOWN theme's navbar has no light/dark toggle button, so this is
+  // absent on every page; only `data-bs-theme` (set above) matters here.
+  if (!activeThemeIcon) return;
   activeThemeIcon.classList.toggle("fa-moon", theme === "dark");
   activeThemeIcon.classList.toggle("fa-sun", theme !== "dark");
 }

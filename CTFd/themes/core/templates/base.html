@@ -4,7 +4,7 @@
   <title>{{ title or Configs.ctf_name }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="{{ url_for('views.themes_beta', theme='core', path='img/unknown/unknown-favicon.png') }}">
 
   {{ meta | safe }}
 
