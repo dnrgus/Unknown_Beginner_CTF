@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-challenges.css') }}?v=2">
+{% endblock %}
+
+{% block content %}
+<div class="unknown-cb-shell">
+  <div class="container unknown-cb-container">
+    <div class="unknown-cb-hero">
+      <div>
+        <p class="unknown-cb-kicker">UNKNOWN CTF</p>
+        <h1>Challenges</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        {% include "components/errors.html" %}
+      </div>
+    </div>
+
+    <div
+      x-data="ChallengeBoard"
+      x-init="$data.selectedCategory = null"
+      @load-challenges.window="loadChallenges()"
+      @load-challenge.window="loadChallenge($event.detail)"
+    >
+      <div
+        x-ref="challengeWindow"
+        id="challenge-window"
+        class="modal fade unknown-cb-modal"
+        tabindex="-1"
+        role="dialog"
+        x-data=""
+        x-html="$store.challenge.data.view"
+      ></div>
+
+      <div x-show="!loaded" class="unknown-cb-loading">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Loading challenges...</span>
+      </div>
+
+      <div x-show="loaded">
+        <div class="unknown-cb-progress" x-show="challenges.length">
+          <div class="unknown-cb-progress-copy">
+            <span>Personal Progress</span>
+            <strong>
+              <span x-text="challenges.filter((c) => c.solved_by_me).length"></span>
+              /
+              <span x-text="challenges.length"></span>
+              SOLVED &middot;
+              <span x-text="challenges.filter((c) => c.solved_by_me).reduce((total, c) => total + Number(c.value || 0), 0).toLocaleString()"></span>
+              pts
+            </strong>
+          </div>
+          <div class="unknown-cb-progress-track" aria-hidden="true">
+            <i :style="`width: ${challenges.length ? (challenges.filter((c) => c.solved_by_me).length / challenges.length) * 100 : 0}%`"></i>
+          </div>
+        </div>
+
+        <nav class="unknown-cb-filter" aria-label="Challenge category filter">
+          <button type="button" :class="{ active: selectedCategory == null }" @click.prevent.stop="selectedCategory = null">ALL</button>
+          <template x-for="category in ['Web', 'Pwn', 'Reversing', 'Crypto', 'OSINT', 'Misc'].filter((name) => getCategories().includes(name))" :key="category">
+            <button
+              type="button"
+              :class="['cat-' + category.toLowerCase(), { active: selectedCategory === category }]"
+              @click.prevent.stop="selectedCategory = category"
+              x-text="category === 'Reversing' ? 'REV' : category.toUpperCase()"
+            ></button>
+          </template>
+        </nav>
+
+        <div class="unknown-cb-empty" x-show="challenges.length === 0">
+          <strong>No challenges loaded</strong>
+          <span>Visible challenges will appear here.</span>
+        </div>
+
+        <template x-for="category in ['Web', 'Pwn', 'Reversing', 'Crypto', 'OSINT', 'Misc'].filter((name) => getCategories().includes(name))" :key="category">
+          <section
+            class="unknown-cb-section"
+            :class="'cat-' + category.toLowerCase()"
+            x-show="selectedCategory == null || selectedCategory === category"
+          >
+            <div class="unknown-cb-section-head">
+              <h2 x-text="category === 'Reversing' ? 'REV' : category.toUpperCase()"></h2>
+              <span>
+                <b x-text="getChallenges(category).filter((c) => c.solved_by_me).length"></b>
+                /
+                <span x-text="getChallenges(category).length"></span>
+                solved
+              </span>
+            </div>
+
+            <div class="unknown-cb-grid">
+              <template
+                x-for="c in getChallenges(category).slice().sort((a, b) => Number(a.value || 0) - Number(b.value || 0) || String(a.name).localeCompare(String(b.name)))"
+                :key="c.id"
+              >
+                <button
+                  type="button"
+                  class="unknown-cb-card"
+                  :class="[
+                    c.solved_by_me ? 'is-solved' : '',
+                    'cat-' + String(c.category || '').toLowerCase(),
+                  ]"
+                  @click="loadChallenge(c.id)"
+                >
+                  <div class="unknown-cb-card-top">
+                    <span class="unknown-cb-difficulty" x-text="String((c.tags || []).find((tag) => ['easy', 'easy+', 'normal', 'hard'].includes(String(tag.value).toLowerCase()))?.value || 'easy').toUpperCase()"></span>
+                    <span class="unknown-cb-solved" x-show="c.solved_by_me"><i class="fas fa-check"></i></span>
+                  </div>
+                  <h3 x-text="c.name"></h3>
+                  <div class="unknown-cb-card-meta">
+                    <span><b x-text="c.value"></b> pts</span>
+                    <span><b x-text="c.solves"></b> solves</span>
+                  </div>
+                </button>
+              </template>
+            </div>
+          </section>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/challenges.js") }}
+{% endblock %}

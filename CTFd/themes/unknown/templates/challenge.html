@@ -1,0 +1,144 @@
+<div :class="getStyles()" role="document" x-data="Challenge" x-init='id = {{ challenge.id }}; max_attempts = {{ max_attempts }}; attempts = {{ attempts }}; ratingValue = {{ (rating.get('value') if rating else None) | tojson }}; ratingReview = {{ (rating.get('review', '') if rating else None) | tojson }};'>
+  <div class="modal-content unknown-cm-content">
+    <button type="button" class="btn-close unknown-cm-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <div class="modal-body unknown-cm-body">
+      <div class="unknown-cm-head">
+        <div>
+          <span class="unknown-cm-category">{{ challenge.category }}</span>
+          <h2>{{ challenge.name }}</h2>
+        </div>
+        <div class="unknown-cm-score">
+          <strong>{{ challenge.value }}</strong>
+          <span>PTS</span>
+        </div>
+      </div>
+
+      <div class="unknown-cm-meta">
+        {% if tags %}
+          {% for tag in tags %}
+            <span>{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+        {% if solves != None %}
+          <span>{{ ngettext("%(num)d Solve", "%(num)d Solves", solves) }}</span>
+        {% endif %}
+      </div>
+
+      <section class="unknown-cm-section">
+        <span class="unknown-cm-label">Description</span>
+        <div class="challenge-desc unknown-cm-desc">{% block description %}{{ challenge.html }}{% endblock %}</div>
+      </section>
+
+      {% if challenge.connection_info %}
+        <section class="unknown-cm-section">
+          <span class="unknown-cm-label">Connection</span>
+          <div class="unknown-cm-connection">
+            {% block connection_info %}
+              {% set conn = challenge.connection_info %}
+              {% if conn.startswith("http") %}
+                {{ conn | urlize(target="_blank") }}
+              {% else %}
+                <code>{{ conn }}</code>
+              {% endif %}
+            {% endblock %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if files %}
+        <section class="unknown-cm-section">
+          <span class="unknown-cm-label">Files</span>
+          <div class="unknown-cm-files">
+            {% for file in files %}
+              {% set segments = file.split('/') %}
+              {% set token = file.split('?') | last %}
+              {% if token %}
+                {% set filename = segments | last | replace("?" + token, "") %}
+              {% else %}
+                {% set filename = segments | last %}
+              {% endif %}
+              <a href="{{ file }}" title="{{ filename }}">
+                <i class="fas fa-download"></i>
+                <span>{{ filename }}</span>
+              </a>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if hints %}
+        <section class="unknown-cm-section challenge-hints">
+          <span class="unknown-cm-label">Hints</span>
+          {% for hint in hints | sort(attribute="cost") %}
+            <div x-data="Hint" x-init="id = {{ hint.id }}">
+              {% if hint.content %}
+                <details>
+                  <summary>{% trans %}View Hint{% endtrans %}{% if hint.title %}: {{ hint.title }}{% endif %}</summary>
+                  <div>{{ hint.html | safe }}</div>
+                </details>
+              {% else %}
+                <details @toggle="showHint(event)">
+                  {% if hint.title %}
+                    <summary>{{ hint.title }} (Cost: {{ hint.cost }} point{{ hint.cost|pluralize }})</summary>
+                  {% else %}
+                    <summary>Unlock Hint for {{ hint.cost }} point{{ hint.cost|pluralize }}</summary>
+                  {% endif %}
+                  <div x-html="html"></div>
+                </details>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      <section class="unknown-cm-section unknown-cm-submit">
+        <span class="unknown-cm-label">Flag</span>
+        <div class="unknown-cm-submit-row">
+          <input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
+          <input
+            id="challenge-input"
+            class="challenge-input form-control"
+            type="text"
+            name="submission"
+            @keyup.enter="submitChallenge()"
+            placeholder="UNKNOWN{...}"
+            x-model="submission"
+          >
+          <button
+            id="challenge-submit"
+            class="challenge-submit btn"
+            type="submit"
+            @click.debounce.500ms="submitChallenge()"
+          >
+            Submit
+          </button>
+        </div>
+      </section>
+
+      <div class="notification-row">
+        <template x-if="response">
+          <div
+            class="alert text-center w-100 mt-3"
+            :class="{
+              'alert-success': response.data.status == 'correct',
+              'alert-info': response.data.status == 'already_solved',
+              'alert-danger': response.data.status == 'incorrect',
+              'alert-warning': response.data.status == 'paused',
+            }"
+            role="alert"
+          >
+            <strong x-text="response.data.message"></strong>
+            <div x-show="(response.data.status == 'correct' || response.data.status == 'already_solved')">
+              <div x-show="getNextId()">
+                <button @click="nextChallenge()" class="btn btn-info mt-3">
+                  {% trans %}Next Challenge{% endtrans %}
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
