@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-challenges.css') }}?v=6">
+  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-scoreboard.css') }}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="unknown-cb-shell">
+  <div class="container unknown-cb-container">
+    <header class="unknown-cb-hero">
+      <h1>Scoreboard</h1>
+    </header>
+
+    <div class="row">
+      <div class="col-md-12">
+        {% include "components/errors.html" %}
+      </div>
+    </div>
+
+    <div id="unknown-scoreboard-root" class="unknown-sb-root">
+      <div class="unknown-sb-stats">
+        <div class="unknown-sb-stat">
+          <span class="unknown-sb-stat-value" id="sb-stat-teams">&ndash;</span>
+          <span class="unknown-sb-stat-label">{% trans %}Teams{% endtrans %}</span>
+        </div>
+        <div class="unknown-sb-stat">
+          <span class="unknown-sb-stat-value" id="sb-stat-challenges">&ndash;</span>
+          <span class="unknown-sb-stat-label">{% trans %}Challenges{% endtrans %}</span>
+        </div>
+        <div class="unknown-sb-stat">
+          <span class="unknown-sb-stat-value" id="sb-stat-solves">&ndash;</span>
+          <span class="unknown-sb-stat-label">{% trans %}Solves{% endtrans %}</span>
+        </div>
+      </div>
+
+      <div class="unknown-sb-toolbar">
+        <div class="unknown-sb-view-toggle" role="tablist" aria-label="{% trans %}Scoreboard view{% endtrans %}">
+          <button type="button" class="unknown-sb-toggle-btn" data-view="overview">{% trans %}Overview{% endtrans %}</button>
+          <button type="button" class="unknown-sb-toggle-btn" data-view="detailed">{% trans %}Detailed{% endtrans %}</button>
+        </div>
+        <div class="unknown-sb-updated" id="sb-updated"></div>
+      </div>
+
+      <div class="unknown-sb-loading" id="sb-loading">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>{% trans %}Loading scoreboard...{% endtrans %}</span>
+      </div>
+
+      <div class="unknown-sb-empty" id="sb-empty" hidden>
+        <span>{% trans %}NO FLAGS CAPTURED YET.{% endtrans %}</span>
+        <p>{% trans %}The scoreboard is waiting for its first challenger.{% endtrans %}</p>
+      </div>
+
+      <section id="sb-overview" class="unknown-sb-panel" hidden>
+        <div class="unknown-sb-podium" id="sb-podium"></div>
+        <div class="unknown-sb-table-wrap">
+          <table class="unknown-sb-table">
+            <thead>
+              <tr>
+                <th class="sb-col-rank">{% trans %}Rank{% endtrans %}</th>
+                <th class="sb-col-team">{% trans %}Team{% endtrans %}</th>
+                <th class="sb-col-score">{% trans %}Score{% endtrans %}</th>
+                <th class="sb-col-solves">{% trans %}Solves{% endtrans %}</th>
+              </tr>
+            </thead>
+            <tbody id="sb-overview-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="sb-detailed" class="unknown-sb-panel" hidden>
+        <div class="unknown-sb-matrix-wrap">
+          <table class="unknown-sb-matrix">
+            <thead id="sb-matrix-head"></thead>
+            <tbody id="sb-matrix-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="unknown-sb-modal" id="sb-team-modal" hidden>
+  <div class="unknown-sb-modal-backdrop" data-modal-close></div>
+  <div class="unknown-sb-modal-dialog" role="dialog" aria-modal="true">
+    <button type="button" class="unknown-sb-modal-close" data-modal-close aria-label="{% trans %}Close{% endtrans %}">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="unknown-sb-modal-body" id="sb-team-modal-body"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('views.themes_beta', theme='unknown', path='js/unknown-scoreboard.js') }}?v=1" defer></script>
+{% endblock %}
