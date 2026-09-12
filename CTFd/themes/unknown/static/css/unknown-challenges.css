@@ -33,7 +33,10 @@ body {
 }
 
 .unknown-cb-container {
-  max-width: 1080px;
+  width: 100%;
+  max-width: none;
+  padding-left: clamp(0.75rem, 1.8vw, 1.5rem);
+  padding-right: clamp(1rem, 2.5vw, 2.5rem);
 }
 
 .unknown-cb-hero {
@@ -60,34 +63,34 @@ body {
 
 .unknown-cb-board {
   display: grid;
-  grid-template-columns: 210px minmax(0, 1fr);
-  gap: 2.3rem;
+  grid-template-columns: clamp(260px, 18vw, 340px) minmax(0, 1fr);
+  gap: clamp(1.6rem, 2.4vw, 3rem);
   align-items: start;
 }
 
 .unknown-cb-sidebar {
-  position: sticky;
-  top: 5.5rem;
+  position: static;
 }
 
 .unknown-cb-filter {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.9rem;
 }
 
 .unknown-cb-filter button {
   border: 1px solid var(--unk-border);
-  border-radius: 7px;
-  padding: 0.72rem 0.75rem;
+  border-radius: 8px;
+  min-height: 64px;
+  padding: 1rem 1.05rem;
   background: rgba(29, 29, 34, 0.92);
   color: var(--unk-muted);
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.55);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  font-size: 0.84rem;
+  font-size: clamp(1rem, 1.05vw, 1.18rem);
   font-weight: 800;
   line-height: 1;
   text-transform: lowercase;
@@ -98,13 +101,13 @@ body {
   display: inline-flex;
   min-width: 0;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.85rem;
 }
 
 .unknown-cb-filter button i {
-  width: 18px;
+  width: 24px;
   color: var(--unk-muted);
-  font-size: 1rem;
+  font-size: 1.25rem;
   text-align: center;
 }
 
@@ -116,7 +119,7 @@ body {
 
 .unknown-cb-filter button b {
   color: #777985;
-  font-size: 0.78rem;
+  font-size: clamp(0.9rem, 0.95vw, 1.06rem);
 }
 
 .unknown-cb-filter button:hover,
@@ -141,17 +144,17 @@ body {
 .cat-misc { --accent: var(--unk-misc); }
 
 .unknown-cb-section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.55rem;
 }
 
 .unknown-cb-section-head {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .unknown-cb-section-head h2 {
   margin: 0;
   color: #d9d9df;
-  font-size: 1.18rem;
+  font-size: clamp(1.45rem, 1.8vw, 1.95rem);
   font-weight: 900;
   letter-spacing: 0;
   text-transform: lowercase;
@@ -159,19 +162,19 @@ body {
 
 .unknown-cb-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
 }
 
 .unknown-cb-card {
   position: relative;
-  min-height: 104px;
+  min-height: 148px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 7px;
-  padding: 0.72rem 0.78rem 0.65rem;
+  border-radius: 8px;
+  padding: 1.05rem 1.1rem 0.95rem;
   background: var(--unk-card);
   color: var(--unk-text);
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.7);
   text-align: left;
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
@@ -184,14 +187,14 @@ body {
 
 .unknown-cb-card.is-solved {
   border-color: rgba(53, 208, 127, 0.65);
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(53, 208, 127, 0.2);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(53, 208, 127, 0.2);
 }
 
 .unknown-cb-card h3 {
-  min-height: 22px;
-  margin: 0 0 0.56rem;
+  min-height: 42px;
+  margin: 0 0 0.9rem;
   color: #ededf2;
-  font-size: 0.94rem;
+  font-size: clamp(1.12rem, 1.35vw, 1.42rem);
   font-weight: 900;
   line-height: 1.25;
   word-break: keep-all;
@@ -202,8 +205,8 @@ body {
   display: grid;
   grid-template-columns: auto minmax(24px, 1fr) auto;
   align-items: center;
-  gap: 0.48rem;
-  margin-bottom: 0.56rem;
+  gap: 0.65rem;
+  margin-bottom: 0.95rem;
 }
 
 .unknown-cb-mid > i {
@@ -214,10 +217,10 @@ body {
 
 .unknown-cb-difficulty {
   border-radius: 999px;
-  padding: 0.12rem 0.38rem 0.14rem;
+  padding: 0.18rem 0.52rem 0.2rem;
   background: var(--accent, #58a6ff);
   color: #101116;
-  font-size: 0.6rem;
+  font-size: 0.78rem;
   font-weight: 900;
   line-height: 1;
   text-transform: lowercase;
@@ -225,18 +228,18 @@ body {
 
 .unknown-cb-solved {
   display: inline-grid;
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   place-items: center;
   border-radius: 50%;
   background: rgba(53, 208, 127, 0.14);
   color: var(--unk-green);
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 .unknown-cb-cat-icon {
   color: #a6a7af;
-  font-size: 0.9rem;
+  font-size: 1.18rem;
 }
 
 .unknown-cb-card-meta {
@@ -245,14 +248,14 @@ body {
   justify-content: space-between;
   gap: 0.75rem;
   color: #d8d8de;
-  font-size: 0.9rem;
+  font-size: clamp(1.08rem, 1.15vw, 1.25rem);
   font-weight: 900;
 }
 
 .unknown-cb-card-meta span {
   display: inline-flex;
   align-items: center;
-  gap: 0.36rem;
+  gap: 0.5rem;
 }
 
 .unknown-cb-card-meta i {
@@ -434,6 +437,11 @@ body {
 }
 
 @media (max-width: 991px) {
+  .unknown-cb-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .unknown-cb-board {
     grid-template-columns: 1fr;
     gap: 1.4rem;
@@ -445,11 +453,11 @@ body {
 
   .unknown-cb-filter {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .unknown-cb-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
   }
 }
 
