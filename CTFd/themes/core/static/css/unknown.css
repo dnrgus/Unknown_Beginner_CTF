@@ -31,7 +31,7 @@
 }
 
 :root {
-  --unknown-bg: #010309;
+  --unknown-bg: #111217;
   --unknown-panel: rgba(5, 12, 24, 0.84);
   --unknown-panel-strong: rgba(6, 15, 30, 0.96);
   --unknown-line: rgba(92, 211, 255, 0.22);
@@ -58,11 +58,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Site-wide backdrop. Matches the Challenges/Scoreboard page shell
+   (unknown-cb-shell in unknown-challenges.css) so every page reads as one
+   mood: a flat dark ground, soft purple/blue corner glows, and a fine dot
+   grid. Card/panel/button colors elsewhere in this file are unchanged. */
 body {
   background:
-    radial-gradient(circle at 50% -12%, rgba(21, 156, 255, 0.14), transparent 32rem),
-    linear-gradient(135deg, #010309 0%, #04101d 52%, #010309 100%);
-  background-size: auto, auto;
+    radial-gradient(circle at 20% 10%, rgba(192, 132, 252, 0.10), transparent 19rem),
+    radial-gradient(circle at 80% 0%, rgba(88, 166, 255, 0.08), transparent 20rem),
+    #111217;
+  background-size: auto, auto, auto;
   color: var(--unknown-text);
   font-family: var(--unknown-sans);
   letter-spacing: 0;
@@ -75,19 +80,8 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px);
-  background-size: 132px 132px;
-  opacity: 0.1;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: linear-gradient(120deg, transparent, rgba(103, 232, 249, 0.02), transparent);
-  opacity: 0.28;
+  background: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 10px 10px;
 }
 
 body,
