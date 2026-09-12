@@ -2,8 +2,8 @@
 
 {% block stylesheets %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-challenges.css') }}?v=6">
-  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-scoreboard.css') }}?v=1">
+  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-challenges.css') }}?v=7">
+  <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='unknown', path='css/unknown-scoreboard.css') }}?v=2">
 {% endblock %}
 
 {% block content %}
@@ -55,7 +55,7 @@
 
       <section id="sb-overview" class="unknown-sb-panel" hidden>
         <div class="unknown-sb-podium" id="sb-podium"></div>
-        <div class="unknown-sb-table-wrap">
+        <div class="unknown-sb-table-wrap" id="sb-table-wrap" hidden>
           <table class="unknown-sb-table">
             <thead>
               <tr>
@@ -71,7 +71,7 @@
       </section>
 
       <section id="sb-detailed" class="unknown-sb-panel" hidden>
-        <div class="unknown-sb-matrix-wrap">
+        <div class="unknown-sb-matrix-wrap" id="sb-matrix-wrap" hidden>
           <table class="unknown-sb-matrix">
             <thead id="sb-matrix-head"></thead>
             <tbody id="sb-matrix-body"></tbody>
@@ -95,5 +95,5 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ url_for('views.themes_beta', theme='unknown', path='js/unknown-scoreboard.js') }}?v=1" defer></script>
+  <script src="{{ url_for('views.themes_beta', theme='unknown', path='js/unknown-scoreboard.js') }}?v=2" defer></script>
 {% endblock %}

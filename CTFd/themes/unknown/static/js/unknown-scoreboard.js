@@ -39,6 +39,8 @@
     detailedPanel: document.getElementById("sb-detailed"),
     overviewBody: document.getElementById("sb-overview-body"),
     podium: document.getElementById("sb-podium"),
+    tableWrap: document.getElementById("sb-table-wrap"),
+    matrixWrap: document.getElementById("sb-matrix-wrap"),
     matrixHead: document.getElementById("sb-matrix-head"),
     matrixBody: document.getElementById("sb-matrix-body"),
     statTeams: document.getElementById("sb-stat-teams"),
@@ -430,8 +432,12 @@
     renderStats();
     renderOverview();
     renderMatrix();
-    els.empty.hidden = state.standings.length > 0;
-    els.updated.textContent = state.standings.length
+
+    var hasData = state.standings.length > 0;
+    els.empty.hidden = hasData;
+    els.tableWrap.hidden = !hasData;
+    els.matrixWrap.hidden = !hasData;
+    els.updated.textContent = hasData
       ? "Updated " + new Date().toLocaleTimeString()
       : "";
   }
