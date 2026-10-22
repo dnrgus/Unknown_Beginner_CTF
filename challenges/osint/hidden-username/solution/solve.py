@@ -4,7 +4,11 @@ from pathlib import Path
 
 
 def main():
-    base = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("challenges/osint/hidden-username/challenge")
+    base = (
+        Path(sys.argv[1])
+        if len(sys.argv) > 1
+        else Path("challenges/osint/hidden-username/challenge")
+    )
     profile = (base / "profile.html").read_text()
     username = re.search(r"canonical username:\s*([a-z0-9_]+)", profile).group(1)
     candidate = (base / "archive" / f"{username}.txt").read_text()

@@ -6,7 +6,11 @@ from pathlib import Path
 
 
 def main():
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("challenges/crypto/base-adventure/challenge/encoded.txt")
+    path = (
+        Path(sys.argv[1])
+        if len(sys.argv) > 1
+        else Path("challenges/crypto/base-adventure/challenge/encoded.txt")
+    )
     data = path.read_text().strip().encode()
     step1 = base64.b64decode(data)
     step2 = binascii.unhexlify(step1)

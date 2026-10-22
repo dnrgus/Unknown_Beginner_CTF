@@ -9,7 +9,11 @@ TARGET_NAMES = {item["name"] for item in CHALLENGES}
 def main():
     app = create_app()
     with app.app_context():
-        items = [challenge for challenge in Challenges.query.all() if challenge.name in TARGET_NAMES]
+        items = [
+            challenge
+            for challenge in Challenges.query.all()
+            if challenge.name in TARGET_NAMES
+        ]
         print("count", len(items))
         categories = {}
         for challenge in items:

@@ -5,7 +5,11 @@ from pathlib import Path
 
 
 def main():
-    archive = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("challenges/misc/hidden-file/challenge/hidden-file.zip")
+    archive = (
+        Path(sys.argv[1])
+        if len(sys.argv) > 1
+        else Path("challenges/misc/hidden-file/challenge/hidden-file.zip")
+    )
     with zipfile.ZipFile(archive) as zf:
         for name in zf.namelist():
             data = zf.read(name).decode(errors="ignore")

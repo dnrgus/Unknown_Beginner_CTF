@@ -4,7 +4,11 @@ import sys
 
 
 def main():
-    binary = sys.argv[1] if len(sys.argv) > 1 else "challenges/reversing/xor-password/challenge/xor-password"
+    binary = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else "challenges/reversing/xor-password/challenge/xor-password"
+    )
     encoded_password = [22, 53, 40, 5, 50, 47, 52, 46, 63, 40]
     password = bytes(value ^ 0x5A for value in encoded_password)
     result = subprocess.run(

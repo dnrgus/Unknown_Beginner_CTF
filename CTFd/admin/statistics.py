@@ -1,7 +1,16 @@
 from flask import render_template
 
 from CTFd.admin import admin
-from CTFd.models import Challenges, Fails, Solves, Submissions, Teams, Tracking, Users, db
+from CTFd.models import (
+    Challenges,
+    Fails,
+    Solves,
+    Submissions,
+    Teams,
+    Tracking,
+    Users,
+    db,
+)
 from CTFd.utils import get_config
 from CTFd.utils.decorators import admins_only
 from CTFd.utils.modes import get_model

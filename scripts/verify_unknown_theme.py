@@ -33,7 +33,9 @@ def main():
     with app.app_context():
         assert get_config("ctf_theme") == "unknown", "ctf_theme is not unknown"
 
-        challenge = Challenges.query.order_by(Challenges.value.asc(), Challenges.id.asc()).first()
+        challenge = Challenges.query.order_by(
+            Challenges.value.asc(), Challenges.id.asc()
+        ).first()
         assert challenge is not None, "no challenges found"
 
         flag = Flags.query.filter_by(challenge_id=challenge.id).first()

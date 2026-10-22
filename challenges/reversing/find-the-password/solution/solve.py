@@ -4,7 +4,11 @@ import sys
 
 
 def main():
-    binary = sys.argv[1] if len(sys.argv) > 1 else "challenges/reversing/find-the-password/challenge/find-the-password"
+    binary = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else "challenges/reversing/find-the-password/challenge/find-the-password"
+    )
     result = subprocess.run(
         [binary],
         input=b"blue_keycard\n",

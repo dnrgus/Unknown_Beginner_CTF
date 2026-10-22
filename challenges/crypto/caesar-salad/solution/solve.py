@@ -16,7 +16,11 @@ def rot13(text):
 
 
 def main():
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("challenges/crypto/caesar-salad/challenge/message.txt")
+    path = (
+        Path(sys.argv[1])
+        if len(sys.argv) > 1
+        else Path("challenges/crypto/caesar-salad/challenge/message.txt")
+    )
     decoded = rot13(path.read_text())
     flag = re.search(r"UNKNOWN\{[^}]+\}", decoded)
     if not flag:

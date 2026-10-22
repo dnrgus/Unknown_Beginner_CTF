@@ -4,7 +4,11 @@ import sys
 
 
 def main():
-    binary = sys.argv[1] if len(sys.argv) > 1 else "challenges/reversing/simple-check/challenge/simple-check"
+    binary = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else "challenges/reversing/simple-check/challenge/simple-check"
+    )
     result = subprocess.run(
         [binary],
         input=b"rev_check7\n",
