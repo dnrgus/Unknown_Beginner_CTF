@@ -2,11 +2,11 @@
 
 Phase 1 creates three beginner Web challenges from the production plan.
 
-| Challenge | Difficulty | Concept | Local URL | Expected Time |
-| --- | --- | --- | --- | --- |
-| WEB-01 Source Hunter | Easy | HTML source / DevTools | http://localhost:8101 | 5-10 min |
-| WEB-02 Cookie Monster | Easy | Cookie tampering | http://localhost:8102 | 10-15 min |
-| WEB-03 Baby SQL | Easy+ | Basic SQL Injection | http://localhost:8103 | 15-25 min |
+| Challenge             | Difficulty | Concept                | Local URL             | Expected Time |
+| --------------------- | ---------- | ---------------------- | --------------------- | ------------- |
+| WEB-01 Source Hunter  | Easy       | HTML source / DevTools | http://localhost:8101 | 5-10 min      |
+| WEB-02 Cookie Monster | Easy       | Cookie tampering       | http://localhost:8102 | 10-15 min     |
+| WEB-03 Baby SQL       | Easy+      | Basic SQL Injection    | http://localhost:8103 | 15-25 min     |
 
 Run the services:
 

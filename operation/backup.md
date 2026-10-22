@@ -24,12 +24,12 @@ your normal Git remote/history:
 Per `.gitignore`, the following are bind-mounted to `.data/` on the host and
 are **not** committed:
 
-| Path | Contents |
-|---|---|
-| `.data/mysql/` | MariaDB data directory (users, challenges, scores, submissions — everything) |
-| `.data/CTFd/uploads/` | Uploaded challenge files, imported CSVs, any player-uploaded assets |
-| `.data/CTFd/logs/` | Application logs (nice to keep for incident review, not critical) |
-| `.data/redis/` | Redis cache/session data (safe to lose — it's a cache, not source of truth) |
+| Path                  | Contents                                                                     |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `.data/mysql/`        | MariaDB data directory (users, challenges, scores, submissions — everything) |
+| `.data/CTFd/uploads/` | Uploaded challenge files, imported CSVs, any player-uploaded assets          |
+| `.data/CTFd/logs/`    | Application logs (nice to keep for incident review, not critical)            |
+| `.data/redis/`        | Redis cache/session data (safe to lose — it's a cache, not source of truth)  |
 
 **The two that matter are `.data/mysql/` and `.data/CTFd/uploads/`.** Everything
 a participant did — accounts, solves, scores — lives in `.data/mysql/`.
@@ -90,22 +90,26 @@ drive, bucket, or backup host) — a backup sitting next to a corrupted
 ## 5. When to back up
 
 ### Before the event (setup phase)
+
 - Once challenges, categories, points and hints are finalized.
 - Once test accounts are created and verified.
 - Label this backup clearly, e.g. `backup_pre-event_YYYYMMDD.sql` — this is
   your rollback point if something goes wrong during final setup.
 
 ### Right before the event goes live
+
 - Immediately before flipping registration/challenges to public.
 - This is the backup you restore to if you need to "reset the clock" and
   start the event over from a clean state.
 
 ### During the event
+
 - Periodically (e.g. every 30–60 minutes for a multi-hour event) via the
   `mysqldump` command above. Cheap, fast, and lets you recover from an
   operator mistake without losing hours of participant progress.
 
 ### After the event
+
 - One final `mysqldump` + uploads tarball immediately after the scoreboard
   is frozen/finalized — this is your permanent record of final scores and
   is what you restore from if you need to regenerate certificates, resolve

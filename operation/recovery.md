@@ -14,7 +14,7 @@ git clone <this repository's URL> platform
 cd platform
 ```
 
-If you're restoring on the *same* machine after a failure, you likely
+If you're restoring on the _same_ machine after a failure, you likely
 already have the working directory — skip to step 3, but confirm
 `git status` is clean before doing anything destructive.
 
