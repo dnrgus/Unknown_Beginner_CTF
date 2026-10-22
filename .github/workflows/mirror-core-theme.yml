@@ -7,6 +7,7 @@ on:
 
 jobs:
   mirror:
+    if: github.repository == 'CTFd/CTFd'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
